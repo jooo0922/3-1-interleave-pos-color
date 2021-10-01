@@ -5,6 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Listing 3-1, Interleaved vertex data</title>
+
+    <!-- 
+      varying 변수는 버텍스 셰이더의 결과를 프래그먼트 셰이더로 보낼 때 사용하는 변수.
+
+      버텍스 셰이더에 정의된 varying 변수는 aVertexColor에 전달된 각 버텍스들의 컬러값을
+      선형 보간하여 프래그먼트 셰이더에 전달하기 때문에
+      프래그먼트 셰이더의 varying 값과 버텍스 셰이더의 varying 값은 다르다!
+      
+      -> 즉, 알아서 컬러값을 선형보간 해줘서 프래그먼트 셰이더에 전달한다는 뜻! 
+    -->
+    <script id="shader-vs" type="x-shader/x-vertex">
+      attribute vec3 aVertexPosition;
+      attribute vec4 aVertexColor;
+      varying vec4 vColor;
+
+      void main() {
+        vColor = aVertexColor;
+        gl_Position = vec4(aVertexPosition, 1.0);
+      }
+    </script>
+
+    <script id="shader-fs" type="x-shader/x-fragment">
+      precision mediump float;
+
+      varying vec4 vColor;
+      void main() {
+        gl_FragColor = vColor;
+      }
+    </script>
+
     <script src="./app.js" defer></script>
     <script src="./webgl-debug.js" defer></script>
   </head>
